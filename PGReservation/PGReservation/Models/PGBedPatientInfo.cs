@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
@@ -8,6 +9,7 @@ namespace PGReservation.Models
 {
     public class PGBedPatientInfo
     {
+        [Key]
         public int PGBedPatientId { set; get; }
        // public int BedId { set; get; }
         public string PatientName { set; get; }

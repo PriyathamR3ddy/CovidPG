@@ -1,10 +1,13 @@
 ﻿
 
+using System.ComponentModel.DataAnnotations;
+
 namespace PGReservation.Models
 {
     public class PatientIdType
     {
-      public int TypeId { set; get; }
+        [Key]
+        public int TypeId { set; get; }
       public string TypeName { set; get; }
     }
 }

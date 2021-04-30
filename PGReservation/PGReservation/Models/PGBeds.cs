@@ -1,10 +1,13 @@
 ﻿
 
+using System.ComponentModel.DataAnnotations;
+
 namespace PGReservation.Models
 {
     public class PGBeds
     {
-       // public int PGId { set; get; }
+        // public int PGId { set; get; }
+        [Key]
         public int BedID { set; get; }
         public int BedNo { set; get; }
         public string BedStatus { get; set; }

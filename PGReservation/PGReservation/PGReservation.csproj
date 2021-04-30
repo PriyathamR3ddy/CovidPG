@@ -184,10 +184,29 @@
     <Compile Include="Migrations\202104301821582_newuserpro.Designer.cs">
       <DependentUpon>202104301821582_newuserpro.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104301939362_Added Middle Name.cs" />
+    <Compile Include="Migrations\202104301939362_Added Middle Name.Designer.cs">
+      <DependentUpon>202104301939362_Added Middle Name.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104302017340_Added Tables.cs" />
+    <Compile Include="Migrations\202104302017340_Added Tables.Designer.cs">
+      <DependentUpon>202104302017340_Added Tables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104302041543_Added UserPG Table.cs" />
+    <Compile Include="Migrations\202104302041543_Added UserPG Table.Designer.cs">
+      <DependentUpon>202104302041543_Added UserPG Table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PatientIdType.cs" />
+    <Compile Include="Models\PatientRecords.cs" />
+    <Compile Include="Models\PGBedPatientInfo.cs" />
+    <Compile Include="Models\PGBeds.cs" />
+    <Compile Include="Models\PGRegistration.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserPG.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -276,6 +295,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104301821582_newuserpro.resx">
       <DependentUpon>202104301821582_newuserpro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104301939362_Added Middle Name.resx">
+      <DependentUpon>202104301939362_Added Middle Name.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104302017340_Added Tables.resx">
+      <DependentUpon>202104302017340_Added Tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104302041543_Added UserPG Table.resx">
+      <DependentUpon>202104302041543_Added UserPG Table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

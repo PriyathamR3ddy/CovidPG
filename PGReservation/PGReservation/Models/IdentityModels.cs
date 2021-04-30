@@ -19,6 +19,7 @@ namespace PGReservation.Models
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string MiddleName { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -27,10 +28,20 @@ namespace PGReservation.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+        public DbSet<PGRegistration> PgRegistrations { get; set; }
+        public DbSet<PGBeds> PgBeds { get; set; }
+        public DbSet<PGBedPatientInfo> PgBedPatientInfo { get; set; }
+        public DbSet<PatientIdType> PatientIdTypes { get; set; }
+        public DbSet<PatientRecords> PatientRecords { get; set; }
 
+        public DbSet<UserPG> UserPg { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
