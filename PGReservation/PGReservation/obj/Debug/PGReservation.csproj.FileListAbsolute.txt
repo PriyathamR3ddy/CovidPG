@@ -108,3 +108,4 @@ C:\covid\CovidPG\PGReservation\PGReservation\obj\Debug\PGReservation.dll
 C:\covid\CovidPG\PGReservation\PGReservation\obj\Debug\PGReservation.pdb
 C:\covid\CovidPG\PGReservation\PGReservation\obj\Debug\PGReservation.Migrations.InitialCreate.resources
 C:\covid\CovidPG\PGReservation\PGReservation\obj\Debug\PGReservation.csproj.GenerateResource.cache
+C:\covid\CovidPG\PGReservation\PGReservation\obj\Debug\PGReservation.Migrations.newuserpro.resources
