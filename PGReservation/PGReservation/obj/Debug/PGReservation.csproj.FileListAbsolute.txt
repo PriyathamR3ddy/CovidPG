@@ -114,3 +114,5 @@ C:\covid\CovidPG\PGReservation\PGReservation\obj\Debug\PGReservation.Migrations.
 C:\covid\CovidPG\PGReservation\PGReservation\obj\Debug\PGReservation.Migrations.AddedUserPGTable.resources
 C:\covid\CovidPG\PGReservation\PGReservation\bin\GridMvc.dll
 C:\covid\CovidPG\PGReservation\PGReservation\obj\Debug\PGReservation.Migrations.upate.resources
+C:\covid\CovidPG\PGReservation\PGReservation\obj\Debug\PGReservation.Migrations.update2.resources
+C:\covid\CovidPG\PGReservation\PGReservation\obj\Debug\PGReservation.Migrations.update3.resources

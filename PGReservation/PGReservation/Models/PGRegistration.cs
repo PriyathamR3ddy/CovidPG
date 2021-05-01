@@ -18,5 +18,7 @@ namespace PGReservation.Models
         public string PinCode { set; get; }
         public string   GmapLocation { set; get; }
         public string NoOfBeds { set; get; }
+
+        public string UserId { get; set; }
     }
 }
