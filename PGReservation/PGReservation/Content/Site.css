@@ -22,3 +22,26 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.grid-table {
+    border: 1px solid #c4c4cd;
+}
+
+    .grid-table > thead {
+        box-shadow: inset 1px 0 0 #f6f6f7;
+        font-weight: normal;
+        border-bottom: 1px solid #c4c4cd;
+    }
+
+.PGRegButton {
+    float: right;
+    margin-bottom: 12px;
+}
+
+.grid-header {
+    background: #eeeef1;
+}
+.grid-cell {
+    max-width: 10%;
+    width: 10%;
+}
