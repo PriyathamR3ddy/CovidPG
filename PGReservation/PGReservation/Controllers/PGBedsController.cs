@@ -46,9 +46,13 @@ namespace PGReservation.Controllers
             return RedirectToAction("Index", "PGBedPatientInfoes", new{ bedId  = id});
         }
 
-        public ActionResult AddPatient()
+        public ActionResult AddPatient(int? id)
         {
-            return RedirectToAction("Create", "PGBedPatientInfoes");
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            return RedirectToAction("Create", "PGBedPatientInfoes", new { id = id});
         }
 
         // POST: PGBeds/Create
