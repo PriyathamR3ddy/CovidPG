@@ -36,9 +36,11 @@ namespace PGReservation.Controllers
         }
 
         // GET: PGBedPatientInfoes/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            return View();
+            PGBedPatientInfo mdl = new PGBedPatientInfo();
+            mdl.BedID =  id.Value;
+            return View(mdl);
         }
 
         // POST: PGBedPatientInfoes/Create
@@ -46,7 +48,7 @@ namespace PGReservation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PGBedPatientId,PatientName,PatientPhone,PatientAddress,State,District,City,Pincode,PatientIdTypeValue,PatientStatus,Notes,PatientAdmittedOnDate,PatientDischargedOnDate")] PGBedPatientInfo pGBedPatientInfo)
+        public ActionResult Create([Bind(Include = "PGBedPatientId,PatientName,PatientPhone,PatientAddress,State,District,City,Pincode,PatientIdTypeValue,PatientStatus,Notes,PatientAdmittedOnDate,PatientDischargedOnDate,BedID")] PGBedPatientInfo pGBedPatientInfo)
         {
             if (ModelState.IsValid)
             {
