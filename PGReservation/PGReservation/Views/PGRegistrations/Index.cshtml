@@ -7,7 +7,11 @@
 }
 
 <h2>Dashboard</h2>
-@Html.ActionLink("Create New", "Create", "PGRegistrations", null, new { @class = "btn btn-primary" })
+@if (User.IsInRole("SuperAdmin"))
+{
+    @Html.ActionLink("Create New", "Create", "PGRegistrations", null, new { @class = "btn btn-primary" })
+}
+
 @Html.Grid(Model).Columns(columns =>
 {
     columns.Add(c => c.PGName).Titled("PG Name").Filterable(true);
