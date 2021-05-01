@@ -41,7 +41,7 @@ textarea {
 .grid-header {
     background: #eeeef1;
 }
-.grid-cell {
-    max-width: 10%;
-    width: 10%;
+.grid-table > table {
+    table-layout: fixed;
+    width: 100%;
 }

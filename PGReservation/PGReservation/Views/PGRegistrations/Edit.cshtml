@@ -9,7 +9,7 @@
     <div class="form-group col-md-6">
         <h2>Edit</h2>
     </div>
-    <div class="form-group col-md-6" style="padding-top:3%">
+    <div class="form-group col-md-6 text-right" style="padding-top:3%">
         @Html.ActionLink("Back to List", "Index")
     </div>
 </div>
@@ -134,17 +134,9 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10" style="padding-left:30%">
+            <div class="col-md-offset-2 col-md-10" style="padding-left:70%">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </div>
     </div>
-
-    @*<div>
-        @{Html.RenderAction("PgBedInfo", "PGRegistrations", new { Model.PGID});}
-    </div>*@
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
