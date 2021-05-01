@@ -1,5 +1,4 @@
-﻿
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -7,113 +6,107 @@ using PGReservation.Models;
 
 namespace PGReservation.Controllers
 {
-    public class PGRegistrationsController : Controller
+    public class PGBedsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: PGRegistrations
-        public ActionResult Index()
+        // GET: PGBeds
+        public ActionResult Index(int? PgId)
         {
-            return View(db.PgRegistrations.ToList());
+            return View(db.PgBeds.Select(x=>x.PgRegistration.PGID == PgId).ToList());
         }
 
-        // GET: PGRegistrations/Details/5
+        // GET: PGBeds/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PGRegistration pGRegistration = db.PgRegistrations.Find(id);
-            if (pGRegistration == null)
+            PGBeds pGBeds = db.PgBeds.Find(id);
+            if (pGBeds == null)
             {
                 return HttpNotFound();
             }
-            return View(pGRegistration);
+            return View(pGBeds);
         }
 
-        // GET: PGRegistrations/Create
+        // GET: PGBeds/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: PGRegistrations/Create
+        // POST: PGBeds/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PGID,PGName,ContactPerson,Phone,Address,State,District,City,PinCode,GmapLocation,NoOfBeds")] PGRegistration pGRegistration)
+        public ActionResult Create([Bind(Include = "BedID,BedNo,BedStatus")] PGBeds pGBeds)
         {
             if (ModelState.IsValid)
             {
-                db.PgRegistrations.Add(pGRegistration);
+                db.PgBeds.Add(pGBeds);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(pGRegistration);
+            return View(pGBeds);
         }
 
-        // GET: PGRegistrations/Edit/5
+        // GET: PGBeds/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PGRegistration pGRegistration = db.PgRegistrations.Find(id);
-            if (pGRegistration == null)
+            PGBeds pGBeds = db.PgBeds.Find(id);
+            if (pGBeds == null)
             {
                 return HttpNotFound();
             }
-            return View(pGRegistration);
+            return View(pGBeds);
         }
 
-        public PartialViewResult PgBedInfo(int PGID)
-        {
-            var model = db.PgBeds.Select(x => x.PgRegistration.PGID == PGID);
-            return PartialView("PgBedsPartialView", model);
-        }
-
-        // POST: PGRegistrations/Edit/5
+        // POST: PGBeds/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PGID,PGName,ContactPerson,Phone,Address,State,District,City,PinCode,GmapLocation,NoOfBeds")] PGRegistration pGRegistration)
+        public ActionResult Edit([Bind(Include = "BedID,BedNo,BedStatus")] PGBeds pGBeds)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(pGRegistration).State = EntityState.Modified;
+                db.Entry(pGBeds).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(pGRegistration);
+            return View(pGBeds);
         }
 
-        // GET: PGRegistrations/Delete/5
+        // GET: PGBeds/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PGRegistration pGRegistration = db.PgRegistrations.Find(id);
-            if (pGRegistration == null)
+            PGBeds pGBeds = db.PgBeds.Find(id);
+            if (pGBeds == null)
             {
                 return HttpNotFound();
             }
-            return View(pGRegistration);
+            return View(pGBeds);
         }
 
-        // POST: PGRegistrations/Delete/5
+        // POST: PGBeds/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            PGRegistration pGRegistration = db.PgRegistrations.Find(id);
-            db.PgRegistrations.Remove(pGRegistration);
+            PGBeds pGBeds = db.PgBeds.Find(id);
+            db.PgBeds.Remove(pGBeds);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
