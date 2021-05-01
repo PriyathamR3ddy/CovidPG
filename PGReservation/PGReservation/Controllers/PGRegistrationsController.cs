@@ -58,13 +58,21 @@ namespace PGReservation.Controllers
         // GET: PGRegistrations
         public ActionResult Index()
         {
+            List<PGRegistration> pglist = new List<PGRegistration>();
             if (User.IsInRole("SuperAdmin"))
-                return View(db.PgRegistrations.ToList());
+                pglist = db.PgRegistrations.ToList();
             else
             {
                 string userId = User.Identity.GetUserId();
-                return View(db.PgRegistrations.Where(x => x.UserId != null && x.UserId == userId).ToList());
+                pglist = db.PgRegistrations.Where(x => x.UserId != null && x.UserId == userId).ToList();
             }
+
+            foreach(var pg in pglist)
+            {
+                pg.AvailableBeds = db.PgBeds.Where(x => x.PgRegistration.PGID == pg.PGID && x.BedStatus == "Available").Count() + "/" + pg.NoOfBeds;
+            }
+
+            return View(pglist);
         }
 
         // GET: PGRegistrations/Details/5
