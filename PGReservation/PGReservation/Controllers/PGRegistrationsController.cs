@@ -70,11 +70,36 @@ namespace PGReservation.Controllers
             return View(pGRegistration);
         }
 
-        public PartialViewResult PgBedInfo(int PGID)
+        public PartialViewResult PgBedInfo(int? PGID)
         {
-            var model = db.PgBeds.Select(x => x.PgRegistration.PGID == PGID);
-            return PartialView("PgBedsPartialView", model);
+            //if (PGID.HasValue)
+            //{
+                var model = db.PgBeds.Select(x => x.PgRegistration.PGID == PGID);
+                return PartialView("PgBedsPartialView", model);
+           // }
+
+            
         }
+
+        public ActionResult CreatePatient()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreatePatient([Bind(Include = "PGBedPatientId,PatientName,PatientPhone,PatientAddress,State,District,City,Pincode,PatientIdTypeValue,PatientStatus,Notes,PatientAdmittedOnDate,PatientDischargedOnDate")] PGBedPatientInfo patientInfo)
+        {
+            if (ModelState.IsValid)
+            {
+                db.PgBedPatientInfo.Add(patientInfo);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(patientInfo);
+        }
+
 
         // POST: PGRegistrations/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 

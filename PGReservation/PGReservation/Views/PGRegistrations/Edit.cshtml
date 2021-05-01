@@ -6,7 +6,9 @@
 }
 
 <h2>Edit</h2>
-
+<p>
+    @Html.ActionLink("Add Patient", "CreatePatient")
+</p>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -103,9 +105,9 @@
             </div>
         </div>
     </div>
-    <div>
-        @{Html.RenderAction("PgBedInfo", "PGRegistrations",Model.PGID);}
-    </div>
+    @*<div>
+        @{Html.RenderAction("PgBedInfo", "PGRegistrations", Model.PGID);}
+    </div>*@
 }
 
 <div>

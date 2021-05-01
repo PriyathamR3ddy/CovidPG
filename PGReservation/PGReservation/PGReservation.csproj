@@ -286,6 +286,7 @@
     <Content Include="Views\PGBeds\Index.cshtml" />
     <Content Include="Views\PGRegistrations\PgBedsPartialView.cshtml" />
     <Content Include="Views\PGRegistrations\PgBeds.cshtml" />
+    <Content Include="Views\PGRegistrations\CreatePatient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
