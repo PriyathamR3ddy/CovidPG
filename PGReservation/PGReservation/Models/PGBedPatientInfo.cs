@@ -27,7 +27,7 @@ namespace PGReservation.Models
         public DateTime PatientAdmittedOnDate { set; get; }
         public DateTime PatientDischargedOnDate { set; get; }
 
-        public virtual PGBeds PgBed { get; set; }
+        public virtual PGBeds PgBed { set; get; }
         public virtual PatientIdType PatientType { get; set; }
     }
 }

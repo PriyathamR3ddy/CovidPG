@@ -291,15 +291,36 @@ namespace PGReservation.Controllers
             return View(pGRegistration);
         }
 
+        public ActionResult BedInfo(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+           
+            return RedirectToAction("Index","PGBeds", new {PgId = id});
+        }
+
         // POST: PGRegistrations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            PGRegistration pGRegistration = db.PgRegistrations.Find(id);
-            db.PgRegistrations.Remove(pGRegistration);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            var pgbedslst = db.PgBeds.Where(x => x.PgRegistration.PGID == id)?.Select(y => y.BedID).ToList();
+            if (!db.PgBedPatientInfo.Any(x => pgbedslst.Contains(x.PgBed.BedID)))
+            {
+                db.PgBeds.RemoveRange(db.PgBeds.Where(x => x.PgRegistration.PGID == id));
+                db.SaveChanges();
+                PGRegistration pGRegistration = db.PgRegistrations.Find(id);
+                db.PgRegistrations.Remove(pGRegistration);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError("Cannot delete", "Error! Unable to delete the PG. PG is in use");
+                return View(db.PgRegistrations.Find(id));
+            }
         }
 
         protected override void Dispose(bool disposing)

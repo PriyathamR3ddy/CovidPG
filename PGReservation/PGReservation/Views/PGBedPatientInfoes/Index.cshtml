@@ -1,0 +1,100 @@
+﻿@model IEnumerable<PGReservation.Models.PGBedPatientInfo>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PatientName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PatientPhone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PatientAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.State)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.District)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pincode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PatientIdTypeValue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PatientStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PatientAdmittedOnDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PatientDischargedOnDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PatientName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PatientPhone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PatientAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.State)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.District)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pincode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PatientIdTypeValue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PatientStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Notes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PatientAdmittedOnDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PatientDischargedOnDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PGBedPatientId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PGBedPatientId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PGBedPatientId })
+        </td>
+    </tr>
+}
+
+</table>
