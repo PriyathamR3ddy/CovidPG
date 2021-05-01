@@ -157,10 +157,10 @@ namespace PGReservation.Controllers
             pgvm.City = pGRegistration.City;
             pgvm.ContactPerson = pGRegistration.ContactPerson;
             pgvm.District = pGRegistration.District;
-            pgvm.Email = user.Email;
-            pgvm.FirstName = user.FirstName;
+           // pgvm.Email = user.Email;
+           // pgvm.FirstName = user.FirstName;
             pgvm.GmapLocation = pGRegistration.GmapLocation;
-            pgvm.LastName = user.LastName; 
+           // pgvm.LastName = user.LastName; 
             pgvm.NoOfBeds = pGRegistration.NoOfBeds;
             pgvm.PGID = pGRegistration.PGID;
             pgvm.PGName = pGRegistration.PGName;
@@ -267,6 +267,16 @@ namespace PGReservation.Controllers
                 return HttpNotFound();
             }
             return View(pGRegistration);
+        }
+
+        public ActionResult BedInfo(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+           
+            return RedirectToAction("Index","PGBeds", new {PgId = id});
         }
 
         // POST: PGRegistrations/Delete/5

@@ -30,9 +30,11 @@
             @Html.DisplayFor(modelItem => item.BedStatus)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BedID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BedID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BedID })
+            @Html.ActionLink("Edit", "Edit", new { id = item.BedID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.BedID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.BedID }) |
+            @Html.ActionLink("Add Patient", "AddPatient") |
+            @Html.ActionLink("View Patient Info", "ViewPatient", new { id = item.BedID })
         </td>
     </tr>
 }
