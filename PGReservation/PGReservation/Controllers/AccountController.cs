@@ -79,7 +79,7 @@ namespace PGReservation.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index","PGRegistrations");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -449,7 +449,7 @@ namespace PGReservation.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return  RedirectToAction("Index", "Home"); 
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

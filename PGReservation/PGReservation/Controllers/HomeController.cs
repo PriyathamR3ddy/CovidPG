@@ -15,6 +15,7 @@ namespace PGReservation.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        ApplicationDbContext _dbContext = new ApplicationDbContext();
 
         public HomeController()
         {
@@ -57,11 +58,6 @@ namespace PGReservation.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult PGRegister()
-        {
-            return View();
-        }
 
         [HttpGet]
         public ActionResult GetPGById(int id)
