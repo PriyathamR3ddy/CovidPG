@@ -109,3 +109,9 @@ C:\covid\CovidPG\PGReservation\PGReservation\obj\Debug\PGReservation.pdb
 C:\covid\CovidPG\PGReservation\PGReservation\obj\Debug\PGReservation.Migrations.InitialCreate.resources
 C:\covid\CovidPG\PGReservation\PGReservation\obj\Debug\PGReservation.csproj.GenerateResource.cache
 C:\covid\CovidPG\PGReservation\PGReservation\obj\Debug\PGReservation.Migrations.newuserpro.resources
+C:\covid\CovidPG\PGReservation\PGReservation\bin\Mvc.Grid.Core.dll
+C:\covid\CovidPG\PGReservation\PGReservation\obj\Debug\PGReservation.Migrations.AddedMiddleName.resources
+C:\covid\CovidPG\PGReservation\PGReservation\obj\Debug\PGReservation.Migrations.AddedTables.resources
+C:\covid\CovidPG\PGReservation\PGReservation\obj\Debug\PGReservation.Migrations.AddedUserPGTable.resources
+C:\covid\CovidPG\PGReservation\PGReservation\bin\GridMvc.dll
+C:\covid\CovidPG\PGReservation\PGReservation\obj\Debug\PGReservation.Migrations.upate.resources

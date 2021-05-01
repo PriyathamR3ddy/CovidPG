@@ -9,6 +9,8 @@ namespace PGReservation.Models
     {
         [Key]
         public int UserPGId { set; get; }
+        public string UserId { set; get; }
+        public int PGID { set; get; }
         public virtual ApplicationUser user { get; set; }
         public virtual ICollection<PGRegistration> PgRegistrations { get; set; }
     }

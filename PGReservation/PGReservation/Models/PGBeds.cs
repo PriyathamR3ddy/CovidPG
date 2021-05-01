@@ -9,7 +9,7 @@ namespace PGReservation.Models
         // public int PGId { set; get; }
         [Key]
         public int BedID { set; get; }
-        public int BedNo { set; get; }
+        public string BedNo { set; get; }
         public string BedStatus { get; set; }
         public virtual PGRegistration PgRegistration { get; set; }
     }
