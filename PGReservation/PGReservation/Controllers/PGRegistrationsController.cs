@@ -58,7 +58,13 @@ namespace PGReservation.Controllers
         // GET: PGRegistrations
         public ActionResult Index()
         {
-            return View(db.PgRegistrations.ToList());
+            if (User.IsInRole("SuperAdmin"))
+                return View(db.PgRegistrations.ToList());
+            else
+            {
+                string userId = User.Identity.GetUserId();
+                return View(db.PgRegistrations.Where(x => x.UserId != null && x.UserId == userId).ToList());
+            }
         }
 
         // GET: PGRegistrations/Details/5
@@ -91,16 +97,24 @@ namespace PGReservation.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = pGRegistration.Email, Email = pGRegistration.Email, FirstName = pGRegistration.FirstName, LastName = pGRegistration.LastName };
-                var result = await UserManager.CreateAsync(user, ConfigurationManager.AppSettings["DefaultPwd"]);
-                if (result.Succeeded)
+                IdentityResult result = new IdentityResult();
+                ApplicationUser usercheck = UserManager.FindByEmail(pGRegistration.Email);
+                if (usercheck == null)
                 {
-                    await this.UserManager.AddToRoleAsync(user.Id, "PGAdmin");
+                    usercheck = new ApplicationUser { UserName = pGRegistration.Email, Email = pGRegistration.Email, FirstName = pGRegistration.FirstName, LastName = pGRegistration.LastName };
+                    result = await UserManager.CreateAsync(usercheck, ConfigurationManager.AppSettings["DefaultPwd"]);
+                    if (result.Succeeded)
+                    {
+                        await this.UserManager.AddToRoleAsync(usercheck.Id, "PGAdmin");
+                    }
+                }
 
+                //if (result.Succeeded)
+                {
                     PGRegistration pg = new PGRegistration();
                     pg.Address = pGRegistration.Address;
                     pg.City = pGRegistration.City;
-                    pg.ContactPerson = pGRegistration.FirstName+ " "+pGRegistration.LastName;
+                    pg.ContactPerson = pGRegistration.FirstName + " " + pGRegistration.LastName;
                     pg.District = pGRegistration.District;
                     pg.GmapLocation = pGRegistration.GmapLocation;
                     pg.NoOfBeds = pGRegistration.NoOfBeds;
@@ -109,7 +123,7 @@ namespace PGReservation.Controllers
                     pg.Phone = pGRegistration.Phone;
                     pg.PinCode = pGRegistration.PinCode;
                     pg.State = pGRegistration.State;
-                    pg.UserId = user.Id;
+                    pg.UserId = usercheck.Id;
                     try
                     {
                         db.PgRegistrations.Add(pg);
@@ -120,23 +134,27 @@ namespace PGReservation.Controllers
                         throw e;
                     }
 
-                    db.UserPg.Add(new UserPG() { UserId = user.Id, PGID = pg.PGID });
+                    db.UserPg.Add(new UserPG() { UserId = usercheck.Id, PGID = pg.PGID });
 
-                    for (int i = 1; i <= Convert.ToInt32(pGRegistration.NoOfBeds); i++)
+                    int num = -1;
+                    if (int.TryParse(pGRegistration.NoOfBeds, out num))
                     {
-                        PGBeds pGBeds = new PGBeds();
-                        pGBeds.BedNo = pGRegistration.PGName + "-" + i;
-                        pGBeds.BedStatus = "Available";
-                        pGBeds.PgRegistration = pg;
-                        db.PgBeds.Add(pGBeds);
-                        db.SaveChanges();
-                    }
+                        for (int i = 1; i <= Convert.ToInt32(pGRegistration.NoOfBeds); i++)
+                        {
+                            PGBeds pGBeds = new PGBeds();
+                            pGBeds.BedNo = pGRegistration.PGName + "-" + i;
+                            pGBeds.BedStatus = "Available";
+                            pGBeds.PgRegistration = pg;
+                            db.PgBeds.Add(pGBeds);
+                            db.SaveChanges();
+                        }
+                    }                    
 
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
-            
+
             return View(pGRegistration);
         }
 
@@ -160,14 +178,14 @@ namespace PGReservation.Controllers
             pgvm.Email = user.Email;
             pgvm.FirstName = user.FirstName;
             pgvm.GmapLocation = pGRegistration.GmapLocation;
-            pgvm.LastName = user.LastName; 
+            pgvm.LastName = user.LastName;
             pgvm.NoOfBeds = pGRegistration.NoOfBeds;
             pgvm.PGID = pGRegistration.PGID;
             pgvm.PGName = pGRegistration.PGName;
             pgvm.Phone = pGRegistration.Phone;
             pgvm.PinCode = pGRegistration.PinCode;
             pgvm.State = pGRegistration.State;
-            
+
             if (pGRegistration == null)
             {
                 return HttpNotFound();
@@ -223,8 +241,8 @@ namespace PGReservation.Controllers
                 pgreg.PinCode = pGRegistration.PinCode;
                 pgreg.State = pGRegistration.State;
 
-                db.PgRegistrations.Add(pgreg);
-                db.Entry(pGRegistration).State = EntityState.Modified;
+                db.PgRegistrations.Attach(pgreg);
+                db.Entry(pgreg).State = EntityState.Modified;
                 db.SaveChanges();
 
                 ApplicationUser userModel = UserManager.FindById(pgreg.UserId);
@@ -233,10 +251,14 @@ namespace PGReservation.Controllers
                 var result = await UserManager.UpdateAsync(userModel);
 
                 //db.UserPg.Add(new UserPG() { UserId = userModel.Id,  PGID= pgreg.PGID });
-                var pgbeds = db.PgBeds.Where(x => x.PgRegistration.PGID == pGRegistration.PGID)?.Select(x => x.BedID);
-                var isbedsoccupied = db.PgBedPatientInfo.Where(x => pgbeds != null && pgbeds.Contains(x.PgBed.BedID)).Count() > 0;
+                var pgbeds = db.PgBeds.Where(x => x.PgRegistration.PGID == pGRegistration.PGID)?.Select(x => x.BedID).ToList();
+                var isbedsoccupied = pgbeds.Count == 0 ? false : (db.PgBedPatientInfo?.Where(x => pgbeds != null && pgbeds.Contains(x.PgBed.BedID))?.Count() > 0);
                 if (!isbedsoccupied)
                 {
+                    var deletepgbeds = db.PgBeds.Where(x => x.PgRegistration.PGID == pGRegistration.PGID);
+                    db.PgBeds.RemoveRange(deletepgbeds);
+                    db.SaveChanges();
+
                     for (int i = 1; i <= Convert.ToInt32(pGRegistration.NoOfBeds); i++)
                     {
                         PGBeds pGBeds = new PGBeds();
