@@ -28,7 +28,7 @@ namespace PGReservation.Models
         public string City {  set; get; }
         public string Pincode { set; get; }
         [Display(Name = "Patient TypeID")]
-        public int PatientTypeId { set; get; }
+        public int PatientIdType { set; get; }
         [Display(Name = "PatientID Type Value")]
         public string PatientIdTypeValue { set; get; }
         [Display(Name = "Status")]

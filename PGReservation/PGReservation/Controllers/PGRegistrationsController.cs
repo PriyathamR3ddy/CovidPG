@@ -158,7 +158,7 @@ namespace PGReservation.Controllers
                         }
                     }                    
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "PGRegistrations");
                 }
                 AddErrors(result);
             }
@@ -259,9 +259,10 @@ namespace PGReservation.Controllers
                 var result = await UserManager.UpdateAsync(userModel);
 
                 //db.UserPg.Add(new UserPG() { UserId = userModel.Id,  PGID= pgreg.PGID });
-                var pgbeds = db.PgBeds.Where(x => x.PgRegistration.PGID == pGRegistration.PGID)?.Select(x => x.BedID).ToList();
-                var isbedsoccupied = pgbeds.Count == 0 ? false : (db.PgBedPatientInfo?.Where(x => pgbeds != null && pgbeds.Contains(x.PgBed.BedID))?.Count() > 0);
-                if (!isbedsoccupied)
+                var pgbeds = db.PgBeds.Where(x => x.PgRegistration.PGID == pGRegistration.PGID).Select(y => y.BedID).ToList();
+                var ss = db.PgBedPatientInfo.Include(y => y.PgBed).Where(x => pgbeds.Contains(x.PgBed.BedID)).ToList();
+                //var isbedsoccupied = pgbeds.ToList().Count == 0 ? false : (db.PgBedPatientInfo.Include(y => y.PgBed)?.Where(x => pgbeds != null && pgbeds.Contains(x.PgBed.BedID))?.Count() > 0);
+                if (ss.Count == 0)
                 {
                     var deletepgbeds = db.PgBeds.Where(x => x.PgRegistration.PGID == pGRegistration.PGID);
                     db.PgBeds.RemoveRange(deletepgbeds);
@@ -277,7 +278,7 @@ namespace PGReservation.Controllers
                         db.SaveChanges();
                     }
                 }
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "PGRegistrations");
             }
 
             // AddErrors(result);

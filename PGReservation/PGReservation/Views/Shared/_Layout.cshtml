@@ -23,7 +23,7 @@
                 <ul class="nav navbar-nav">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Dashboard", "Index", "Home")</li>
+                        @*<li>@Html.ActionLink("Dashboard", "Index", "Home")</li>*@
                         if (User.IsInRole("SuperAdmin"))
                         {
                             <li>@Html.ActionLink("PG Registration", "Index", "PGRegistrations")</li>

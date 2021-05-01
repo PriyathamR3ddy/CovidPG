@@ -17,7 +17,8 @@ namespace PGReservation.Controllers
         // GET: PGBedPatientInfoes
         public ActionResult Index(int? bedId)
         {
-            return View(db.PgBedPatientInfo.ToList().FindAll(x => x.PgBed.BedID == bedId));
+            var patientInfo = db.PgBedPatientInfo.Include(x => x.PgBed).Where(x => x.PgBed.BedID == bedId).ToList();
+            return View(patientInfo);
         }
 
         // GET: PGBedPatientInfoes/Details/5
@@ -39,7 +40,7 @@ namespace PGReservation.Controllers
         public ActionResult Create(int? id)
         {
             PGBedPatientInfo mdl = new PGBedPatientInfo();
-            mdl.BedID =  id.Value;
+            mdl.BedID = id.Value;
             return View(mdl);
         }
 
@@ -52,9 +53,11 @@ namespace PGReservation.Controllers
         {
             if (ModelState.IsValid)
             {
+                var bed = db.PgBeds.FirstOrDefault(x => x.BedID == pGBedPatientInfo.BedID);
+                pGBedPatientInfo.PgBed = bed;
                 db.PgBedPatientInfo.Add(pGBedPatientInfo);
                 db.SaveChanges();
-                return RedirectToAction("Index","PGRegistrations");
+                return RedirectToAction("Index", "PGRegistrations");
             }
 
             return View(pGBedPatientInfo);
@@ -68,6 +71,7 @@ namespace PGReservation.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             PGBedPatientInfo pGBedPatientInfo = db.PgBedPatientInfo.Find(id);
+            pGBedPatientInfo.BedID = id.Value;
             if (pGBedPatientInfo == null)
             {
                 return HttpNotFound();
@@ -80,13 +84,13 @@ namespace PGReservation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PGBedPatientId,PatientName,PatientPhone,PatientAddress,State,District,City,Pincode,PatientIdTypeValue,PatientStatus,Notes,PatientAdmittedOnDate,PatientDischargedOnDate")] PGBedPatientInfo pGBedPatientInfo)
+        public ActionResult Edit([Bind(Include = "PGBedPatientId,PatientName,PatientPhone,PatientAddress,State,District,City,Pincode,PatientIdTypeValue,PatientStatus,Notes,PatientAdmittedOnDate,PatientDischargedOnDate,BedID")] PGBedPatientInfo pGBedPatientInfo)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(pGBedPatientInfo).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { bedId = pGBedPatientInfo.BedID });
             }
             return View(pGBedPatientInfo);
         }
